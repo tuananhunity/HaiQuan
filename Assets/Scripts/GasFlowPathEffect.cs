@@ -112,7 +112,8 @@ public class GasFlowPathEffect : MonoBehaviour
 
         main.startColor = gasColor;
         main.startLifetime = totalPathLength / flowSpeed;
-        main.maxParticles = emissionRate * (int)(totalPathLength / flowSpeed);
+        // Fix: Tăng buffer để đủ particles fill cả path
+        main.maxParticles = Mathf.CeilToInt(emissionRate * (totalPathLength / flowSpeed) * 1.5f);
         main.simulationSpace = ParticleSystemSimulationSpace.World;
         main.loop = true;
 
