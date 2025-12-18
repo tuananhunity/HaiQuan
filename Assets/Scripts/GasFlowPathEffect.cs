@@ -11,7 +11,11 @@ public class GasFlowPathEffect : MonoBehaviour
     [Tooltip("Tự động tạo path points từ children")]
     public bool useChildrenAsPath = false;
 
-    [Tooltip("Độ mượt của đường cong (càng cao càng mượt)")]
+    [Tooltip("Loại đường path")]
+    public enum PathType { Straight, Curved }
+    public PathType pathType = PathType.Curved;
+
+    [Tooltip("Độ mượt của đường cong (càng cao càng mượt) - Chỉ dùng khi PathType = Curved")]
     [Range(10, 100)]
     public int pathResolution = 50;
 
@@ -280,25 +284,36 @@ public class GasFlowPathEffect : MonoBehaviour
 
         if (points.Length < 2) return path;
 
-        // Catmull-Rom spline cho đường cong mượt
-        for (int i = 0; i < points.Length - 1; i++)
+        if (pathType == PathType.Straight)
         {
-            Vector3 p0 = i > 0 ? points[i - 1].position : points[i].position;
-            Vector3 p1 = points[i].position;
-            Vector3 p2 = points[i + 1].position;
-            Vector3 p3 = i < points.Length - 2 ? points[i + 2].position : points[i + 1].position;
-
-            int segmentResolution = resolution / (points.Length - 1);
-
-            for (int j = 0; j < segmentResolution; j++)
+            // Đường thẳng: chỉ cần nối các điểm
+            foreach (var point in points)
             {
-                float t = j / (float)segmentResolution;
-                Vector3 point = CalculateCatmullRom(p0, p1, p2, p3, t);
-                path.Add(point);
+                path.Add(point.position);
             }
         }
+        else // PathType.Curved
+        {
+            // Catmull-Rom spline cho đường cong mượt
+            for (int i = 0; i < points.Length - 1; i++)
+            {
+                Vector3 p0 = i > 0 ? points[i - 1].position : points[i].position;
+                Vector3 p1 = points[i].position;
+                Vector3 p2 = points[i + 1].position;
+                Vector3 p3 = i < points.Length - 2 ? points[i + 2].position : points[i + 1].position;
 
-        path.Add(points[points.Length - 1].position);
+                int segmentResolution = resolution / (points.Length - 1);
+
+                for (int j = 0; j < segmentResolution; j++)
+                {
+                    float t = j / (float)segmentResolution;
+                    Vector3 point = CalculateCatmullRom(p0, p1, p2, p3, t);
+                    path.Add(point);
+                }
+            }
+
+            path.Add(points[points.Length - 1].position);
+        }
 
         return path;
     }
