@@ -1,0 +1,18 @@
+{
+    "name": "DOTweenProAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:40c2ae6c17bdbee41913a290aca3bc44"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

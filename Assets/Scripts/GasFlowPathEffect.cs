@@ -39,7 +39,7 @@ public class GasFlowPathEffect : MonoBehaviour
 
     [Header("Visual Settings - Gas")]
     public Color gasColor = new Color(0.9f, 0.9f, 0.95f, 0.15f); // Nhạt hơn, trong suốt hơn
-    public bool isFlowing = true;
+    public bool isFlowing = false;
 
     [Tooltip("Particles lớn lên khi chảy (giống khí lan tỏa)")]
     [Range(1f, 3f)]
@@ -68,6 +68,12 @@ public class GasFlowPathEffect : MonoBehaviour
     {
         SetupPath();
         SetupParticleSystem();
+
+        // Nếu không flowing thì stop ngay
+        if (!isFlowing && gasParticleSystem != null)
+        {
+            gasParticleSystem.Stop();
+        }
     }
 
     void SetupPath()
@@ -107,6 +113,7 @@ public class GasFlowPathEffect : MonoBehaviour
         // === MAIN MODULE ===
         var main = gasParticleSystem.main;
         main.startSpeed = 0; // Particles sẽ được control bởi script
+        main.playOnAwake = false; // Không tự động play khi start
 
         // Size với variation (khí không đồng đều)
         main.startSize = new ParticleSystem.MinMaxCurve(
@@ -196,6 +203,12 @@ public class GasFlowPathEffect : MonoBehaviour
 
         // Khởi tạo particle array
         particles = new ParticleSystem.Particle[main.maxParticles];
+
+        // Đảm bảo particle system không chạy nếu isFlowing = false
+        if (!isFlowing)
+        {
+            gasParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 
     void LateUpdate()
@@ -205,8 +218,7 @@ public class GasFlowPathEffect : MonoBehaviour
 
         if (!isFlowing)
         {
-            if (gasParticleSystem.isPlaying)
-                gasParticleSystem.Stop();
+            // Không làm gì ở đây, để particles tự chết
             return;
         }
         else if (!gasParticleSystem.isPlaying)
@@ -344,8 +356,35 @@ public class GasFlowPathEffect : MonoBehaviour
     }
 
     // Public methods
-    public void StartFlow() => isFlowing = true;
-    public void StopFlow() => isFlowing = false;
+    public void StartFlow()
+    {
+        isFlowing = true;
+        if (gasParticleSystem != null && !gasParticleSystem.isPlaying)
+        {
+            gasParticleSystem.Play();
+        }
+    }
+
+    public void StopFlow()
+    {
+        isFlowing = false;
+        if (gasParticleSystem != null && gasParticleSystem.isPlaying)
+        {
+            // Stop với StopEmitting: ngừng spawn particles mới, nhưng particles hiện tại vẫn chạy nốt
+            gasParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+    }
+
+    public void StopFlowImmediate()
+    {
+        isFlowing = false;
+        if (gasParticleSystem != null)
+        {
+            // Stop ngay lập tức, xóa luôn particles hiện tại
+            gasParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+    }
+
     public void SetFlowSpeed(float speed) => flowSpeed = speed;
 
     // Gizmos
