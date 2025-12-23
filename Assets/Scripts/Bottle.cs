@@ -17,7 +17,7 @@ public class Bottle : MonoBehaviour
     }
 
 
-    public void StopReleaseAnimation()
+    public void StopReleaseRemoteAnimation()
     {
         if (animator != null)
         {
@@ -26,7 +26,7 @@ public class Bottle : MonoBehaviour
         gasFlowEffect.StopFlow();
     }
 
-    public void StartReleaseAnimation()
+    public void StartReleaseRemoteAnimation()
     {
         gasFlowEffectKhiday.StartFlow();
         DOVirtual.DelayedCall(timeKhiDay, () =>

@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour
 
     public void OnButtonClick(ButtonControl buttonControl)
     {
+        Debug.Log("Button clicked: " + buttonControl.buttonType + " for " + buttonControl.boPhanMay);
         BoPhanMay boPhanMay = buttonControl.boPhanMay;
         ButtonType buttonType = buttonControl.buttonType;
 
@@ -56,6 +57,7 @@ public class Controller : MonoBehaviour
             case ButtonType.StartRemote:
                 if (IsControlRemote(boPhanMay))
                 {
+                    Debug.Log("StartRemote button clicked for " + boPhanMay);
                     buttonControl.IsOn = !buttonControl.IsOn;
                     if(buttonControl.IsOn)
                         StartRelease(buttonControl);
@@ -112,14 +114,39 @@ public class Controller : MonoBehaviour
 
     public void StartRelease(ButtonControl buttonControl)
     {
-        Debug.Log("Starting remote operation for " + buttonControl.boPhanMay);
-        // Implement remote start logic here
+        Debug.Log("Start Release called for " + buttonControl.boPhanMay);
+        if(buttonControl.buttonType == ButtonType.StartRemote)
+        {
+            foreach (var dic in dicBoPhanMayBottles)
+            {
+                if (dic.BoPhanMay == buttonControl.boPhanMay)
+                {
+                    foreach (var bottle in dic.Bottles)
+                    {
+                        Debug.Log("Start Release Remote Animation for " + dic.BoPhanMay);
+                        bottle.StartReleaseRemoteAnimation();
+                    }
+                }
+            }
+        }
     }
 
     public void StopRelease(ButtonControl buttonControl)
     {
-        Debug.Log("Stopping remote operation for " + buttonControl.boPhanMay);
-        // Implement remote stop logic here
+        Debug.Log("Stop Release called for " + buttonControl.boPhanMay);
+        if(buttonControl.buttonType == ButtonType.StartRemote)
+        {
+            foreach (var dic in dicBoPhanMayBottles)
+            {
+                if (dic.BoPhanMay == buttonControl.boPhanMay)
+                {
+                    foreach (var bottle in dic.Bottles)
+                    {
+                        bottle.StopReleaseRemoteAnimation();
+                    }
+                }
+            }
+        }
     }
 }
 
