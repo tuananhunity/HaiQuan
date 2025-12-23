@@ -11104,8 +11104,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1070047485}
+  - component: {fileID: 1070047487}
+  - component: {fileID: 1070047486}
   m_Layer: 0
-  m_Name: DauBinh
+  m_Name: DauBinhNgoai1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11119,15 +11121,52 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070047484}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7443698, z: 0, w: 0.6677677}
-  m_LocalPosition: {x: 0.7199, y: 2.496, z: 34.8622}
+  m_LocalRotation: {x: -0, y: 0.7443698, z: -0, w: 0.6677677}
+  m_LocalPosition: {x: 2.0699, y: 2.1349988, z: 3.1022015}
   m_LocalScale: {x: 0.024, y: 0.024, z: 0.024}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1101352500}
   - {fileID: 1298324496}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1146578793}
   m_LocalEulerAnglesHint: {x: 0, y: 96.21, z: 0}
+--- !u!114 &1070047486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070047484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32fb765e5085fd146b7c73215e4d1731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  gasFlowEffectKhiday: {fileID: 0}
+  gasFlowEffect: {fileID: 0}
+  timeKhiDay: 2
+--- !u!95 &1070047487
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070047484}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d32928a9c7b970d4e8ce8af1326f06c7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1072146180
 GameObject:
   m_ObjectHideFlags: 0
@@ -11579,6 +11618,7 @@ Transform:
   - {fileID: 744088188}
   - {fileID: 7705954861308531538}
   - {fileID: 1905889272}
+  - {fileID: 1070047485}
   m_Father: {fileID: 1821207607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1172425346
@@ -23061,4 +23101,3 @@ SceneRoots:
   - {fileID: 458662209}
   - {fileID: 1202812798}
   - {fileID: 1821207607}
-  - {fileID: 1070047485}
