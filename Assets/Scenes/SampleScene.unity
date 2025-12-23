@@ -11142,7 +11142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb765e5085fd146b7c73215e4d1731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1070047487}
   gasFlowEffectKhiday: {fileID: 0}
   gasFlowEffect: {fileID: 0}
   timeKhiDay: 2
