@@ -8,6 +8,7 @@ public class Bottle : MonoBehaviour
     public Animator animator;
     public GasFlowPathEffect gasFlowEffectKhiday;
     public GasFlowPathEffect gasFlowEffect;
+    public List<Bottle> bottleDependency;
 
     public float timeKhiDay = 2f;
 
@@ -19,21 +20,39 @@ public class Bottle : MonoBehaviour
 
     public void StopReleaseRemoteAnimation()
     {
+        if (abc != null)
+        {
+            abc.Kill();
+        }
         if (animator != null)
         {
             animator.SetTrigger("Close");
         }
-        gasFlowEffect.StopFlow();
+        gasFlowEffectKhiday?.StopFlow();
+        gasFlowEffect?.StopFlow();
+        foreach (var bottleDependency in bottleDependency)
+        {
+            bottleDependency.StopReleaseRemoteAnimation();
+        }
     }
 
+    Tween abc;
     public void StartReleaseRemoteAnimation()
     {
-        gasFlowEffectKhiday.StartFlow();
-        DOVirtual.DelayedCall(timeKhiDay, () =>
+        if(abc != null)
+        {
+            abc.Kill();
+        }
+        gasFlowEffectKhiday?.StartFlow();
+
+        abc = DOVirtual.DelayedCall(timeKhiDay, () =>
         {
             animator.SetTrigger("Open");
             gasFlowEffect.StartFlow();
+            foreach (var bottleDependency in bottleDependency)
+            {
+                bottleDependency.StartReleaseRemoteAnimation();
+            }   
         }); 
-        
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class Controller : MonoBehaviour
 
     void Awake()
     {
+        buttonControls = new List<ButtonControl>(FindObjectsOfType<ButtonControl>());
         foreach (var buttonControl in buttonControls)
         {
             buttonControl.Button.onClick.AddListener(() => OnButtonClick(buttonControl));
@@ -34,6 +36,7 @@ public class Controller : MonoBehaviour
         {
             case ButtonType.SwitchLocalRemote:
                 buttonControl.IsOn = !buttonControl.IsOn;
+                SwitchLocalRemote(buttonControl);
                 break;
             case ButtonType.LockOpen:
                 buttonControl.IsOn = !buttonControl.IsOn;
@@ -112,6 +115,8 @@ public class Controller : MonoBehaviour
         }
     }
 
+    Tween abc;
+    Tween def;
     public void StartRelease(ButtonControl buttonControl)
     {
         Debug.Log("Start Release called for " + buttonControl.boPhanMay);
@@ -125,6 +130,21 @@ public class Controller : MonoBehaviour
                     {
                         Debug.Log("Start Release Remote Animation for " + dic.BoPhanMay);
                         bottle.StartReleaseRemoteAnimation();
+
+                        abc?.Kill();
+                        def?.Kill();
+
+                        dic.denSanSang.DOFade(1f, 0f);
+                        dic.denDangXa.DOFade(1f, 0f);
+                        
+                        abc = DOVirtual.DelayedCall(2f, () =>
+                        {
+                            dic.denSanSang.DOFade(0.5f, 0);
+                        });
+                        def = DOVirtual.DelayedCall(30f, () =>
+                        {
+                            dic.denDangXa.DOFade(0.5f, 0);
+                        });
                     }
                 }
             }
@@ -143,8 +163,28 @@ public class Controller : MonoBehaviour
                     foreach (var bottle in dic.Bottles)
                     {
                         bottle.StopReleaseRemoteAnimation();
+
+                        abc?.Kill();
+                        def?.Kill();
+
+                        dic.denSanSang.DOFade(0.5f, 0f);
+                        dic.denDangXa.DOFade(0.5f, 0f);
                     }
                 }
+            }
+        }
+    }
+
+    public void SwitchLocalRemote(ButtonControl buttonControl)
+    {
+        foreach (var dic in dicBoPhanMayBottles)
+        {
+            if (dic.BoPhanMay == buttonControl.boPhanMay)
+            {
+                if(buttonControl.IsOn)
+                    dic.denTuXa.DOFade(1f, 0.5f);
+                else
+                    dic.denTuXa.DOFade(0.5f, 0.5f);
             }
         }
     }
@@ -171,6 +211,9 @@ public enum ButtonType
 [System.Serializable]
 public class DicBoPhanMayBottle
 {
+    public Image denTuXa;
+    public Image denDangXa;
+    public Image denSanSang;
     public BoPhanMay BoPhanMay;
     public List<Bottle> Bottles;
 }

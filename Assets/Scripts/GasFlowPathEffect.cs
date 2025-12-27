@@ -368,10 +368,10 @@ public class GasFlowPathEffect : MonoBehaviour
     public void StopFlow()
     {
         isFlowing = false;
-        if (gasParticleSystem != null && gasParticleSystem.isPlaying)
+        if (gasParticleSystem != null)
         {
-            // Stop với StopEmitting: ngừng spawn particles mới, nhưng particles hiện tại vẫn chạy nốt
-            gasParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            // Stop ngay lập tức, xóa luôn particles hiện tại
+            gasParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     }
 

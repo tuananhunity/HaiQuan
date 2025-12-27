@@ -1,30 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelTaiLieuThamKhao : MonoBehaviour
 {
-    public GameObject contentTaiLieuThietKeSwuf76;
-    public GameObject contentTaiLieuKhac;
+    public List<ModelConfig> lst;
 
     private bool isOpenOption;
 
-
-    public void TaiLieuThietKeSwuf76()
+    public void OpenThe(int index)
     {
         InActiveAll();
-
-        isOpenOption = true;
-
-        contentTaiLieuThietKeSwuf76.SetActive(true);
-    } 
-    public void TaiLieuKhac()
-    {
-        InActiveAll();
-
-        isOpenOption = true;
-
-        contentTaiLieuKhac.SetActive(true);
+        lst[index].model.SetActive(true);
+        lst[index].name.SetActive(true);
     }
 
     public void OnBack()
@@ -42,8 +31,17 @@ public class PanelTaiLieuThamKhao : MonoBehaviour
     public void InActiveAll()
     {
         isOpenOption = false;
+        lst.ForEach(item =>
+        {
+            item.model.SetActive(false);
+            item.name.SetActive(false);
+        });
+    }
 
-        contentTaiLieuThietKeSwuf76.SetActive(false);
-        contentTaiLieuKhac.SetActive(false);
+[Serializable]
+    public class ModelConfig
+    {
+        public GameObject name;
+        public GameObject model;
     }
 }
