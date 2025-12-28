@@ -39,7 +39,7 @@ public class PanelMoPhongDongCo : MonoBehaviour
     {
         if (videoPlayer.isPlaying)
         {
-            videoPlayer.Stop();
+            videoPlayer.Pause();
         }
     }
 

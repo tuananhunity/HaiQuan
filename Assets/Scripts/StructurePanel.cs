@@ -6,7 +6,7 @@ public class StructurePanel : MonoBehaviour
 {
     public GameObject panelModel3D;
     public PanelMoPhongDongCo panelMoPhongDongCo;
-    public GameObject contentCauTaoHopGiamVong;
+    public List<GameObject> moPhongDapChay;
     public List<GameObject> lstModel3D;
 
     private bool isOpenOption;
@@ -26,12 +26,12 @@ public class StructurePanel : MonoBehaviour
         isOpenOption = true;
         panelMoPhongDongCo.gameObject.SetActive(true);
     } 
-    public void OnOpenCauTaoHopGiamVong()
+    public void OnOpenDapChay()
     {
         InActiveAll();
 
         isOpenOption = true;
-        contentCauTaoHopGiamVong.SetActive(true);
+        moPhongDapChay.ForEach(obj => obj.SetActive(true));
     }
 
     public void OnChooseModel(GameObject go)
@@ -62,7 +62,7 @@ public class StructurePanel : MonoBehaviour
 
         panelModel3D.SetActive(false);
         panelMoPhongDongCo.gameObject.SetActive(false);
-        contentCauTaoHopGiamVong.SetActive(false);
+        moPhongDapChay.ForEach(obj => obj.SetActive(false));
         lstModel3D.ForEach(model => model.SetActive(false));
     }
 }

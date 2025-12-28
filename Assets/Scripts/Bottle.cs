@@ -11,7 +11,7 @@ public class Bottle : MonoBehaviour
     public List<Bottle> bottleDependency;
 
     public float timeKhiDay = 2f;
-
+    public bool isProcess;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -20,6 +20,7 @@ public class Bottle : MonoBehaviour
 
     public void StopReleaseRemoteAnimation()
     {
+        isProcess = false;
         if (abc != null)
         {
             abc.Kill();
@@ -39,6 +40,7 @@ public class Bottle : MonoBehaviour
     Tween abc;
     public void StartReleaseRemoteAnimation()
     {
+        isProcess = true;
         if(abc != null)
         {
             abc.Kill();
@@ -54,5 +56,16 @@ public class Bottle : MonoBehaviour
                 bottleDependency.StartReleaseRemoteAnimation();
             }   
         }); 
+    }
+
+    public void StartSimple()
+    {
+        if (isProcess)
+        {
+            return;
+        }
+        
+        animator.SetTrigger("Open");
+        gasFlowEffect.StartFlow();
     }
 }
