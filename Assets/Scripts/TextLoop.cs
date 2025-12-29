@@ -19,8 +19,8 @@ public class TextLoop : MonoBehaviour
 
     void Loop()
     {
-        a.transform.position = pointA.position;
-        a.DOMove(pointB.position, duration).SetEase(Ease.Linear).OnComplete(() =>
+        a.transform.position = pointB.position;
+        a.DOMove(pointA.position, duration).SetEase(Ease.Linear).OnComplete(() =>
         {
             Loop();
         });

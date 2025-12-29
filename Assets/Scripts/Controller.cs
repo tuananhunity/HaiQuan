@@ -149,6 +149,20 @@ public class Controller : MonoBehaviour
                 }
             }
         }
+
+        if(buttonControl.buttonType == ButtonType.StartLocal)
+        {
+            foreach (var dic in dicBoPhanMayBottles)
+            {
+                if (dic.BoPhanMay == buttonControl.boPhanMay)
+                {
+                    foreach (var bottle in dic.Bottles)
+                    {
+                        bottle.StartReleaseRemoteAnimation();
+                    }
+                }
+            }
+        }
     }
 
     public void StopRelease(ButtonControl buttonControl)
@@ -169,6 +183,20 @@ public class Controller : MonoBehaviour
 
                         dic.denSanSang.DOFade(0.5f, 0f);
                         dic.denDangXa.DOFade(0.5f, 0f);
+                    }
+                }
+            }
+        }
+
+        if(buttonControl.buttonType == ButtonType.StopLocal)
+        {
+            foreach (var dic in dicBoPhanMayBottles)
+            {
+                if (dic.BoPhanMay == buttonControl.boPhanMay)
+                {
+                    foreach (var bottle in dic.Bottles)
+                    {
+                        bottle.StopReleaseRemoteAnimation();
                     }
                 }
             }
