@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ScaleWithScrollWheel : MonoBehaviour
 {
-    public float speed = 100f;
-    public float min = 0.1f;
-    public float max = 5;
+     float speed = 1;
+     float min = 1f;
+     float max = 2;
 
   
 

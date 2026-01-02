@@ -3,14 +3,41 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class Controller : MonoBehaviour
 {
+    public static Controller Instance;
     public List<ButtonControl> buttonControls;
     public List<DicBoPhanMayBottle> dicBoPhanMayBottles;
+ 
+    public List<VideoClip> lstVideo;
+    public VideoPlayer player;
+    public GameObject mode;
+
+    public void Play(int index)
+    {
+        player.gameObject.SetActive(true);
+        mode.SetActive(false);
+        player.clip = lstVideo[index];
+        player.Play();
+        DOVirtual.DelayedCall((float)lstVideo[index].length, () =>
+        {
+            player.gameObject.SetActive(false);
+            mode.SetActive(true);
+        });
+    }
 
     void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         buttonControls = new List<ButtonControl>(FindObjectsOfType<ButtonControl>());
         foreach (var buttonControl in buttonControls)
         {
