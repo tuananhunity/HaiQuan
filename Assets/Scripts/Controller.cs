@@ -14,7 +14,8 @@ public class Controller : MonoBehaviour
     public List<VideoClip> lstVideo;
     public VideoPlayer player;
     public GameObject mode;
-
+    public GasFlowPathEffect fxKhiHopChay;
+    public VideoPlayer videoHopKhi;
     public void Play(int index)
     {
         player.gameObject.SetActive(true);
@@ -156,6 +157,8 @@ public class Controller : MonoBehaviour
                     foreach (var bottle in dic.Bottles)
                     {
                         Debug.Log("Start Release Remote Animation for " + dic.BoPhanMay);
+                        videoHopKhi.Play();
+                        fxKhiHopChay.StartFlow();
                         bottle.StartReleaseRemoteAnimation();
 
                         abc?.Kill();
@@ -203,6 +206,9 @@ public class Controller : MonoBehaviour
                 {
                     foreach (var bottle in dic.Bottles)
                     {
+                        fxKhiHopChay.StopFlow();
+                        videoHopKhi.Stop();
+                        videoHopKhi.frame = 0;
                         bottle.StopReleaseRemoteAnimation();
 
                         abc?.Kill();
@@ -223,6 +229,9 @@ public class Controller : MonoBehaviour
                 {
                     foreach (var bottle in dic.Bottles)
                     {
+                        videoHopKhi.Stop();
+                        videoHopKhi.frame = 0;
+                        fxKhiHopChay.StopFlow();
                         bottle.StopReleaseRemoteAnimation();
                     }
                 }
