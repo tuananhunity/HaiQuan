@@ -60,6 +60,8 @@ public class Bottle : MonoBehaviour
 
     public void StartSimple()
     {
+        if(Controller.Instance.isLockPanel)
+            return;
         if (isProcess)
         {
             return;

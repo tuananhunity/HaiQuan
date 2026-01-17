@@ -10,6 +10,7 @@ public class ClickChuanBi : MonoBehaviour
     // Start is called before the first frame update
     void OnMouseDown()
     {
+        Debug.Log("Bam ChuanBi: " + chuanBi);
         if (DicCheckChuanBi[chuanBi])
         {
             return;

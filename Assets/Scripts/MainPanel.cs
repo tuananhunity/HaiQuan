@@ -14,6 +14,7 @@ public class MainPanel : MonoBehaviour
     [SerializeField] private StructurePanel panelCauTao;
     [SerializeField] private PanelTaiLieuThamKhao panelTaiLieuThamKhao;
     [SerializeField] private PanelTaiLieuThamKhao panelCauTao1;
+    [SerializeField] private GameObject goBaoQuan;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class MainPanel : MonoBehaviour
 
     public void OpenPanelCauTao()
     {
+        
         panelMain.SetActive(false);
         panelCauTao.gameObject.SetActive(true);
     }
@@ -40,7 +42,7 @@ public class MainPanel : MonoBehaviour
     public void OpenPanelTaiLieuThamKhao()
     {
         panelMain.SetActive(false);
-        panelTaiLieuThamKhao.gameObject.SetActive(true);
+        goBaoQuan.SetActive(true);
     }
 
     public void OnBackHome()
@@ -57,6 +59,7 @@ public class MainPanel : MonoBehaviour
         panelCauTao.gameObject.SetActive(false);
         panelTaiLieuThamKhao.gameObject.SetActive(false);
         panelCauTao1.gameObject.SetActive(false);
+        goBaoQuan.SetActive(false);
     }
 
     public void OpenProcessPanelControl()

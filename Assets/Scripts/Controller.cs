@@ -16,16 +16,31 @@ public class Controller : MonoBehaviour
     public GameObject mode;
     public GasFlowPathEffect fxKhiHopChay;
     public VideoPlayer videoHopKhi;
+    public GameObject lockPanel;
+    public bool isLockPanel = true;
+    public GameObject namefd;
+    
+    private int count;
     public void Play(int index)
     {
+        count++;
         player.gameObject.SetActive(true);
         mode.SetActive(false);
         player.clip = lstVideo[index];
         player.Play();
+        namefd.SetActive(false);
+        lockPanel.SetActive(false);
         DOVirtual.DelayedCall((float)lstVideo[index].length, () =>
         {
+            namefd.SetActive(true);
+            lockPanel.SetActive(true);
             player.gameObject.SetActive(false);
             mode.SetActive(true);
+            if(count == 4)
+            {
+                lockPanel.SetActive(false);
+                isLockPanel = false;
+            }
         });
     }
 
@@ -56,6 +71,10 @@ public class Controller : MonoBehaviour
 
     public void OnButtonClick(ButtonControl buttonControl)
     {
+        if (isLockPanel)
+        {
+            
+        }
         Debug.Log("Button clicked: " + buttonControl.buttonType + " for " + buttonControl.boPhanMay);
         BoPhanMay boPhanMay = buttonControl.boPhanMay;
         ButtonType buttonType = buttonControl.buttonType;
@@ -145,6 +164,8 @@ public class Controller : MonoBehaviour
 
     Tween abc;
     Tween def;
+    Tween ongXa;
+    public GasFlowPathEffect gas;
     public void StartRelease(ButtonControl buttonControl)
     {
         Debug.Log("Start Release called for " + buttonControl.boPhanMay);
@@ -175,6 +196,11 @@ public class Controller : MonoBehaviour
                         {
                             dic.denDangXa.DOFade(0.5f, 0);
                         });
+                        ongXa?.Kill();
+                        ongXa = DOVirtual.DelayedCall(25, () =>
+                        {
+                            gas.StartFlow();
+                        });
                     }
                 }
             }
@@ -189,6 +215,11 @@ public class Controller : MonoBehaviour
                     foreach (var bottle in dic.Bottles)
                     {
                         bottle.StartReleaseRemoteAnimation();
+                        ongXa?.Kill();
+                        ongXa = DOVirtual.DelayedCall(25, () =>
+                        {
+                            gas.StartFlow();
+                        });
                     }
                 }
             }
@@ -216,6 +247,8 @@ public class Controller : MonoBehaviour
 
                         dic.denSanSang.DOFade(0.5f, 0f);
                         dic.denDangXa.DOFade(0.5f, 0f);
+                        ongXa?.Kill();
+                        gas.StopFlow();
                     }
                 }
             }
@@ -229,6 +262,8 @@ public class Controller : MonoBehaviour
                 {
                     foreach (var bottle in dic.Bottles)
                     {
+                        ongXa?.Kill();
+                        gas.StopFlow();
                         videoHopKhi.Stop();
                         videoHopKhi.frame = 0;
                         fxKhiHopChay.StopFlow();
